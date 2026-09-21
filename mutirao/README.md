@@ -1,87 +1,154 @@
-# Anamnese Neuropediátrica — Mutirão
+# Anamnese — Mutirão de Neurodesenvolvimento
 
-Gerador automático do formulário de anamnese (Google Forms) para o mutirão de neuropediatria.
+Gerador do formulário (Google Forms) de triagem para **Transtorno do Espectro
+Autista em todas as idades, inclusive adultos**, **TDAH**, **transtorno do
+desenvolvimento intelectual** e **transtornos específicos de aprendizagem**.
 
 ## Como gerar o formulário
 
-1. Acesse <https://script.google.com> e crie um novo projeto.
-2. Apague o conteúdo padrão do arquivo `Código.gs`.
+1. Acesse <https://script.google.com> e crie um projeto novo.
+2. Apague o conteúdo padrão de `Código.gs`.
 3. Cole o conteúdo integral de `anamnese-mutirao.gs`.
 4. Selecione a função `criarAnamneseMutirao` e clique em **Executar**.
 5. Autorize os acessos solicitados (Formulários, Planilhas e Drive).
 6. Os três links — edição, resposta e planilha de respostas — aparecem no
    **Registro de execução** (`Ctrl` + `Enter`).
 
-A execução leva cerca de um minuto e pode ser repetida quantas vezes for
-necessário; cada execução gera um formulário novo e independente.
+Cada execução gera um formulário **novo e independente**; executar de novo não
+altera os formulários já criados nem as respostas já coletadas.
+
+## Como editar depois
+
+**Pela interface do Google Forms** — o formulário é seu e fica integralmente
+editável: reescrever enunciados, acrescentar e excluir perguntas, reordenar
+seções, alterar obrigatoriedade e refazer a lógica de ramificação. É o caminho
+para ajustes pontuais e para mudanças durante o próprio mutirão.
+
+**Pelo script** — para mudanças que você queira preservar em futuras gerações,
+edite o bloco `=== CONTEÚDO EDITÁVEL ===`, no topo do arquivo. Ali ficam, em
+listas nomeadas, todos os itens das triagens (critérios A e B do TEA,
+camuflagem, AQ-10, SNAP-IV, ASRS-18, funcionamento adaptativo e aprendizagem).
+Acrescentar um item é acrescentar uma linha à lista correspondente.
 
 ## Estrutura do instrumento
 
 | Seção | Conteúdo | Preenchimento |
 |---|---|---|
-| 1 | Identificação, dados escolares e origem do encaminhamento | Responsável/acolhimento |
-| 2 | Queixa principal, história atual e sinais de alarme | Responsável/acolhimento |
-| 3 | História gestacional, perinatal e neonatal | Responsável/acolhimento |
-| 4 | Marcos do desenvolvimento neuropsicomotor | Responsável/acolhimento |
-| 5 | Roteamento automático por faixa etária | Responsável/acolhimento |
-| 5A | M-CHAT-R — 20 itens (16 a 30 meses) | Responsável |
-| 5B | Sinais nucleares de TEA, domínios A e B (acima de 30 meses) | Responsável |
-| 5C | SNAP-IV — 18 itens (a partir de 4 anos) | Responsável |
-| 6 | Antecedentes patológicos, medicamentos e vacinação | Responsável/acolhimento |
-| 7 | Sono, alimentação e perfil sensorial | Responsável/acolhimento |
-| 8 | Escolaridade e aprendizagem | Responsável/acolhimento |
-| 9 | Comportamento, saúde mental, telas e eventos de vida | Responsável/acolhimento |
-| 10 | História familiar e consanguinidade | Responsável/acolhimento |
-| 11 | Contexto familiar e psicossocial | Responsável/acolhimento |
-| 12 | Terapias e exames prévios | Responsável/acolhimento |
-| 13 | Exame físico, dismorfológico e neurológico | **Equipe médica** |
-| 14 | Hipótese diagnóstica, classificação de risco e conduta | **Equipe médica** |
-| 15 | Consentimento do responsável (LGPD) | Responsável |
+| 1 | Identificação civil completa, filiação, endereço, contatos, escolaridade e origem do encaminhamento | Pessoa avaliada / responsável |
+| 2 | Motivo da avaliação e sinais de alerta | Pessoa avaliada / responsável |
+| 3 | História do desenvolvimento: gestação, período neonatal, marcos e linguagem atual | Pessoa avaliada / responsável |
+| 4 | **Rastreio de TEA — critérios A, B, C, D e E do DSM-5-TR**, especificadores, nível de apoio e camuflagem | Pessoa avaliada / responsável |
+| 5A | **SNAP-IV** — 18 itens (4 a 17 anos) | Responsável |
+| 5B | **AQ-10** — 10 itens (18 anos ou mais) | Pessoa avaliada |
+| 5C | **ASRS-18** — 18 itens (18 anos ou mais) | Pessoa avaliada |
+| 6 | Funcionamento adaptativo nos domínios conceitual, social e prático | Pessoa avaliada / responsável |
+| 7 | Transtornos específicos de aprendizagem: leitura, escrita e matemática; percurso escolar | Pessoa avaliada / responsável |
+| 8 | Saúde mental, comorbidades e eventos de vida | Pessoa avaliada / responsável |
+| 9 | Sono, alimentação e perfil sensorial | Pessoa avaliada / responsável |
+| 10 | Antecedentes clínicos e medicamentos | Pessoa avaliada / responsável |
+| 11 | História familiar e consanguinidade | Pessoa avaliada / responsável |
+| 12 | Contexto psicossocial, funcionalidade, benefícios, curatela e CIPTEA | Pessoa avaliada / responsável |
+| 13 | Terapias e exames prévios | Pessoa avaliada / responsável |
+| 14 | Exame físico, dismorfológico e neurológico | **Equipe médica** |
+| 15 | Hipótese diagnóstica, CID-10/CIF, classificação de risco e conduta | **Equipe médica** |
+| 16 | Consentimento (LGPD) | Pessoa avaliada / responsável |
 
-### Ramificação condicional
+### Ramificação automática por idade
 
-A seção 5 direciona automaticamente o respondente conforme a faixa etária:
+A seção 4 termina com uma pergunta de faixa etária que direciona o respondente:
 
-- **0 a 15 meses** → segue direto para a seção 6;
-- **16 a 30 meses** → M-CHAT-R (5A) → seção 6;
-- **31 meses ou mais** → rastreio de TEA (5B) →
-  - com 4 anos ou mais → SNAP-IV (5C) → seção 6;
-  - com menos de 4 anos → seção 6.
+- **Menos de 4 anos** → segue direto para a seção 6;
+- **4 a 17 anos** → SNAP-IV (5A) → seção 6;
+- **18 anos ou mais** → AQ-10 (5B) → ASRS-18 (5C) → seção 6.
 
-## Interpretação dos instrumentos de rastreio
+O rastreio de TEA da seção 4 é **universal**: aplica-se a todas as idades, por
+ser construído diretamente sobre os critérios diagnósticos, e não sobre um
+instrumento com faixa etária restrita.
 
-### M-CHAT-R (seção 5A)
+## Interpretação das triagens
 
-Pontua-se 1 ponto por resposta de risco. Nos itens **2, 5 e 12** a resposta de
-risco é **"Sim"**; em todos os demais, **"Não"**.
+### Seção 4 — TEA (DSM-5-TR)
 
-| Escore | Risco | Conduta |
-|---|---|---|
-| 0–2 | Baixo | Rastreio negativo; repetir aos 24 meses se aplicado antes |
-| 3–7 | Moderado | Aplicar a entrevista de seguimento (M-CHAT-R/F) |
-| 8–20 | Alto | Dispensar a entrevista; encaminhar de imediato para avaliação diagnóstica e intervenção precoce |
+Não é uma escala com escore. O diagnóstico exige:
 
-### SNAP-IV (seção 5C)
+- **critério A** — comprometimento nos **três** domínios (A1, A2 e A3);
+- **critério B** — pelo menos **dois** dos quatro domínios (B1 a B4);
+- **critério C** — sinais presentes desde o período inicial do desenvolvimento,
+  ainda que só se manifestem plenamente quando as demandas sociais excedem a
+  capacidade de compensação;
+- **critério D** — prejuízo clinicamente significativo;
+- **critério E** — não mais bem explicado por transtorno do desenvolvimento
+  intelectual isolado.
 
-Itens 1–9 avaliam desatenção; itens 10–18, hiperatividade/impulsividade.
-Consideram-se positivos os itens respondidos como **"Bastante"** ou **"Demais"**.
-O ponto de corte é de **6 ou mais itens positivos** em qualquer um dos domínios,
-exigindo ainda prejuízo em pelo menos dois contextos e início antes dos 12 anos
-(DSM-5-TR).
+### Seção 5A — SNAP-IV
 
-> Os dois instrumentos são de **rastreio**, não de diagnóstico. Um resultado
+Itens 1 a 9: desatenção. Itens 10 a 18: hiperatividade/impulsividade.
+Contam-se como positivos os itens respondidos como **"Bastante"** ou
+**"Demais"**. Corte: **6 ou mais itens positivos** em qualquer um dos domínios,
+somados à exigência de prejuízo em pelo menos dois contextos e início antes dos
+12 anos.
+
+### Seção 5B — AQ-10
+
+Corte: **6 pontos ou mais**. Pontuam 1 ponto:
+
+- os itens **1, 7, 8 e 10** quando respondidos com *concordo totalmente* ou
+  *concordo um pouco*;
+- os itens **2, 3, 4, 5, 6 e 9** quando respondidos com *discordo totalmente*
+  ou *discordo um pouco*.
+
+### Seção 5C — ASRS-18
+
+A **Parte A** (itens 1 a 6) é o bloco de rastreio. Contam-se como positivos:
+
+- itens **1, 2 e 3** — *às vezes*, *frequentemente* ou *muito frequentemente*;
+- itens **4, 5 e 6** — *frequentemente* ou *muito frequentemente*.
+
+**4 ou mais** itens positivos na Parte A indicam sintomatologia altamente
+compatível com TDAH no adulto. A Parte B (itens 7 a 18) não tem ponto de corte
+e serve à caracterização do perfil sintomático.
+
+### Seção 6 — Funcionamento adaptativo
+
+Sem escore. O transtorno do desenvolvimento intelectual exige déficit
+**simultâneo** em funções intelectuais e em funcionamento adaptativo, com
+início no período do desenvolvimento. A gravidade é definida pelo
+funcionamento adaptativo, não pelo QI.
+
+### Seção 7 — Transtornos específicos de aprendizagem
+
+Sem escore. Exige-se dificuldade persistente por pelo menos 6 meses apesar de
+intervenção dirigida, desempenho substancialmente abaixo do esperado para a
+idade, início na idade escolar e ausência de explicação melhor por deficiência
+intelectual, déficit sensorial não corrigido, adversidade psicossocial ou
+ensino inadequado — razão pela qual a seção inclui os itens de acuidade visual,
+acuidade auditiva e frequência escolar.
+
+> Todos os instrumentos acima são de **rastreio**, não de diagnóstico. Resultado
 > positivo indica necessidade de avaliação diagnóstica estruturada.
+
+## Sobre a redação dos itens
+
+Os itens do SNAP-IV, do ASRS-18 e do AQ-10 reproduzem o conteúdo dos
+instrumentos originais em redação de trabalho em português. O SNAP-IV e o
+ASRS-18 possuem adaptação transcultural publicada para o português do Brasil
+(Mattos et al., 2006); o AQ-10 é aqui apresentado em tradução livre, de valor
+orientativo. Para uso em pesquisa, perícia ou qualquer contexto que exija
+escore formalmente comparável, confira os itens contra as versões publicadas
+antes de aplicar.
 
 ## Proteção de dados
 
-O formulário coleta dados pessoais sensíveis de saúde de crianças e
-adolescentes. Recomenda-se:
+Este formulário reúne identificação civil (CPF, RG, filiação, endereço) e dados
+pessoais sensíveis de saúde — combinação que eleva o impacto de um eventual
+incidente. Recomenda-se:
 
-- hospedar o formulário e a planilha em conta institucional, não pessoal;
-- restringir o compartilhamento da planilha de respostas à equipe assistencial;
-- não ativar a coleta automática de e-mail sem necessidade assistencial;
-- arquivar as respostas segundo o prazo de guarda de prontuário
-  (Resolução CFM nº 1.821/2007 e Lei nº 13.787/2018).
+- hospedar formulário e planilha em conta institucional, nunca pessoal;
+- restringir o compartilhamento da planilha à equipe assistencial nominalmente;
+- não ativar a coleta automática de e-mail do respondente sem necessidade;
+- definir prazo de guarda conforme a legislação de prontuário
+  (Resolução CFM nº 1.821/2007 e Lei nº 13.787/2018);
+- registrar a operação no inventário de tratamento de dados da instituição.
 
 Base legal: Lei nº 13.709/2018 (LGPD), art. 5º, II; art. 7º, VIII;
 art. 11, II, alínea "f"; e art. 14.
@@ -91,36 +158,49 @@ art. 11, II, alínea "f"; e art. 14.
 1. American Psychiatric Association. *Diagnostic and Statistical Manual of
    Mental Disorders*. 5th ed., text revision (DSM-5-TR). Washington, DC: APA;
    2022.
-2. Robins DL, Casagrande K, Barton M, Chen CMA, Dumont-Mathieu T, Fein D.
-   Validation of the Modified Checklist for Autism in Toddlers, Revised with
-   Follow-up (M-CHAT-R/F). *Pediatrics*. 2014;133(1):37-45.
-3. Losapio MF, Pondé MP. Tradução para o português da escala M-CHAT para
-   rastreamento precoce de autismo. *Revista de Psiquiatria do Rio Grande do
-   Sul*. 2008;30(3):221-229.
-4. Hyman SL, Levy SE, Myers SM; AAP Council on Children with Disabilities.
-   Identification, Evaluation, and Management of Children With Autism Spectrum
-   Disorder. *Pediatrics*. 2020;145(1):e20193447.
-5. Mattos P, Serra-Pinheiro MA, Rohde LA, Pinto D. Apresentação de uma versão
-   em português para uso no Brasil do instrumento MTA-SNAP-IV de avaliação de
-   sintomas de transtorno do déficit de atenção/hiperatividade e sintomas de
-   transtorno desafiador e de oposição. *Revista de Psiquiatria do Rio Grande do
-   Sul*. 2006;28(3):290-297.
-6. Wolraich ML, Hagan JF, Allan C, et al.; AAP Subcommittee on Children and
-   Adolescents with ADHD. Clinical Practice Guideline for the Diagnosis,
-   Evaluation, and Treatment of ADHD in Children and Adolescents. *Pediatrics*.
-   2019;144(4):e20192528.
-7. Moeschler JB, Shevell M; AAP Committee on Genetics. Comprehensive Evaluation
-   of the Child With Intellectual Disability or Global Developmental Delays.
-   *Pediatrics*. 2014;134(3):e903-e918.
-8. Srour M, Shevell M. Genetics and the investigation of developmental delay/
-   intellectual disability. *Archives of Disease in Childhood*.
-   2014;99(4):386-389.
-9. Sociedade Brasileira de Pediatria. *Manual de Orientação: Grupo de Trabalho
-   Saúde na Era Digital — #MenosTelas #MaisSaúde*. Rio de Janeiro: SBP; 2019.
-10. Bromley RL, Weston J, Marson AG. Maternal Use of Antiepileptic Agents During
-    Pregnancy and Major Congenital Malformations and Neurodevelopmental
-    Outcomes. *JAMA*. 2017;318(17):1700-1701.
-11. Brasil. Ministério da Saúde. *Caderneta da Criança*. 3ª ed. Brasília:
-    Ministério da Saúde; 2024.
-12. World Health Organization. *WHO Child Growth Standards: head
-    circumference-for-age*. Geneva: WHO; 2007.
+2. Allison C, Auyeung B, Baron-Cohen S. Toward brief "red flags" for autism
+   screening: the Short Autism Spectrum Quotient and the Short Quantitative
+   Checklist in 1,000 cases and 3,000 controls. *Journal of the American Academy
+   of Child & Adolescent Psychiatry*. 2012;51(2):202-212.
+3. Baron-Cohen S, Wheelwright S, Skinner R, Martin J, Clubley E. The
+   Autism-Spectrum Quotient (AQ): evidence from Asperger syndrome/high-functioning
+   autism, males and females, scientists and mathematicians. *Journal of Autism
+   and Developmental Disorders*. 2001;31(1):5-17.
+4. National Institute for Health and Care Excellence. *Autism spectrum disorder
+   in adults: diagnosis and management*. Clinical guideline CG142. London: NICE;
+   2012 (atualizada em 2021).
+5. Kessler RC, Adler L, Ames M, et al. The World Health Organization Adult ADHD
+   Self-Report Scale (ASRS): a short screening scale for use in the general
+   population. *Psychological Medicine*. 2005;35(2):245-256.
+6. Mattos P, Segenreich D, Saboya E, Louzã M, Dias G, Romano M. Adaptação
+   transcultural para o português da escala Adult Self-Report Scale para
+   avaliação do transtorno de déficit de atenção/hiperatividade em adultos.
+   *Revista de Psiquiatria Clínica*. 2006;33(4):188-194.
+7. Mattos P, Serra-Pinheiro MA, Rohde LA, Pinto D. Apresentação de uma versão em
+   português para uso no Brasil do instrumento MTA-SNAP-IV. *Revista de
+   Psiquiatria do Rio Grande do Sul*. 2006;28(3):290-297.
+8. Hull L, Petrides KV, Allison C, et al. "Putting on my best normal": social
+   camouflaging in adults with autism spectrum conditions. *Journal of Autism and
+   Developmental Disorders*. 2017;47(8):2519-2534.
+9. Lai MC, Lombardo MV, Ruigrok AN, et al. Quantifying and exploring
+   camouflaging in men and women with autism. *Autism*. 2017;21(6):690-702.
+10. Hyman SL, Levy SE, Myers SM; AAP Council on Children with Disabilities.
+    Identification, Evaluation, and Management of Children With Autism Spectrum
+    Disorder. *Pediatrics*. 2020;145(1):e20193447.
+11. Wolraich ML, Hagan JF, Allan C, et al.; AAP Subcommittee on Children and
+    Adolescents with ADHD. Clinical Practice Guideline for the Diagnosis,
+    Evaluation, and Treatment of ADHD in Children and Adolescents. *Pediatrics*.
+    2019;144(4):e20192528.
+12. Schalock RL, Luckasson R, Tassé MJ. *Intellectual Disability: Definition,
+    Diagnosis, Classification, and Systems of Supports*. 12th ed. Washington, DC:
+    AAIDD; 2021.
+13. Moeschler JB, Shevell M; AAP Committee on Genetics. Comprehensive Evaluation
+    of the Child With Intellectual Disability or Global Developmental Delays.
+    *Pediatrics*. 2014;134(3):e903-e918.
+14. Peterson RL, Pennington BF. Developmental dyslexia. *Annual Review of
+    Clinical Psychology*. 2015;11:283-307.
+15. Bromley RL, Weston J, Marson AG. Maternal Use of Antiepileptic Agents During
+    Pregnancy and Major Congenital Malformations and Neurodevelopmental Outcomes.
+    *JAMA*. 2017;318(17):1700-1701.
+16. Brasil. Lei nº 13.977, de 8 de janeiro de 2020 (Lei Romeo Mion) — institui a
+    Carteira de Identificação da Pessoa com Transtorno do Espectro Autista.
