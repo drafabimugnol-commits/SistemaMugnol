@@ -6,16 +6,51 @@ desenvolvimento intelectual** e **transtornos específicos de aprendizagem**.
 
 ## Como gerar o formulário
 
-1. Acesse <https://script.google.com> e crie um projeto novo.
-2. Apague o conteúdo padrão de `Código.gs`.
-3. Cole o conteúdo integral de `anamnese-mutirao.gs`.
-4. Selecione a função `criarAnamneseMutirao` e clique em **Executar**.
-5. Autorize os acessos solicitados (Formulários, Planilhas e Drive).
-6. Os três links — edição, resposta e planilha de respostas — aparecem no
-   **Registro de execução** (`Ctrl` + `Enter`).
+São cinco passos, uma única vez. O passo 4 é o que costuma interromper quem
+nunca usou o Apps Script — leia-o antes de começar.
+
+1. **Copie o código.** Abra `anamnese-mutirao.gs` no GitHub e clique no ícone
+   de cópia (*Copy raw file*), no canto superior direito do arquivo. O arquivo
+   inteiro vai para a área de transferência de uma vez.
+
+2. **Crie o projeto.** Acesse <https://script.google.com>, clique em
+   **Novo projeto**, apague tudo o que estiver em `Código.gs` e cole
+   (`Ctrl` + `V`).
+
+3. **Execute.** Clique em **Executar**, na barra superior. A função
+   `criarAnamneseMutirao` já vem selecionada por ser a única do arquivo.
+
+4. **Autorize.** Aparece a janela *"Autorização necessária"* → clique em
+   **Revisar permissões** e escolha sua conta Google. Muito provavelmente
+   surgirá então a tela **"O Google não verificou este app"**, sem nenhum botão
+   visível para seguir adiante. É esperado, e não indica problema: o aviso
+   aparece para qualquer script pessoal que não tenha passado pela revisão da
+   loja de complementos do Google — inclusive um escrito por você mesma, no seu
+   próprio projeto. Para prosseguir:
+
+   - clique em **Avançado**, no canto inferior esquerdo;
+   - clique em **Acessar Projeto sem título (não seguro)**;
+   - confira as permissões pedidas (Formulários, Planilhas e Drive) e clique
+     em **Permitir**.
+
+   As permissões são necessárias porque o script cria o formulário, cria a
+   planilha de respostas e grava ambos no seu Drive.
+
+5. **Pegue os links.** A execução leva cerca de um minuto. Abra o
+   **Registro de execução** (`Ctrl` + `Enter`): ali estão os três links —
+   edição, resposta e planilha de respostas.
 
 Cada execução gera um formulário **novo e independente**; executar de novo não
 altera os formulários já criados nem as respostas já coletadas.
+
+### Se algo der errado
+
+| O que aparece | O que fazer |
+|---|---|
+| *"O Google não verificou este app"* | **Avançado** → **Acessar … (não seguro)** → **Permitir**. Ver passo 4. |
+| *"Exceção: Limite de tamanho excedido"* ou execução interrompida | Reduza listas no bloco `=== CONTEÚDO EDITÁVEL ===` e execute de novo. |
+| Nada aparece no Registro de execução | Abra o menu **Execuções**, na barra lateral esquerda, e veja o estado da última execução. |
+| O formulário saiu, mas falta alguma seção | Confira o final do Registro de execução: ele imprime os três links apenas quando o script termina por inteiro. |
 
 ## Como editar depois
 
